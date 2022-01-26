@@ -29,16 +29,12 @@ fi
 if [ -f ".hotspot_compiler" ]; then
   cd /opt/zimbra
 fi
-case "`uname`" in
-CYGWIN*) PATHSEP=";";;
-*) PATHSEP=":";;
-esac
 
 ZIMBRA_EXTENSIONS="backup clamscanner network zimbra-license zimbrahsm zimbrasync twofactorauth com_zimbra_ssdb_ephemeral_store zimbra-archive"
 ZIMBRA_EXT_DIR="/opt/zimbra/lib/ext-common/*"
 for i in $ZIMBRA_EXTENSIONS; do
   if [ -d "/opt/zimbra/lib/ext/$i" ]; then
-   ZIMBRA_EXT_DIR="${ZIMBRA_EXT_DIR}${PATHSEP}/opt/zimbra/lib/ext/$i/*"
+   ZIMBRA_EXT_DIR="${ZIMBRA_EXT_DIR}:/opt/zimbra/lib/ext/$i/*"
   fi
 done
 
@@ -49,11 +45,11 @@ if [ x${zimbra_zmjava_java_library_path} = "x" ]; then
 fi
 
 if [ x${zimbra_zmjava_java_ext_dirs} = "x" ]; then
-  zimbra_zmjava_java_ext_dirs=${JRE_EXT_DIR}${PATHSEP}/opt/zimbra/lib/jars${PATHSEP}${ZIMBRA_EXT_DIR}
+  zimbra_zmjava_java_ext_dirs=${JRE_EXT_DIR}:/opt/zimbra/lib/jars:${ZIMBRA_EXT_DIR}
 fi
 
 if [ ! -z "${EXT_JAR_PATH}" ]; then
-  zimbra_zmjava_java_ext_dirs=${zimbra_zmjava_java_ext_dirs}${PATHSEP}${EXT_JAR_PATH}
+  zimbra_zmjava_java_ext_dirs=${zimbra_zmjava_java_ext_dirs}:${EXT_JAR_PATH}
 fi
 
 exec ${zimbra_java_home}/bin/java ${java_options} \
