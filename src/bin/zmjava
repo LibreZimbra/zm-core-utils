@@ -52,7 +52,13 @@ if [ ! -z "${EXT_JAR_PATH}" ]; then
   zimbra_zmjava_java_ext_dirs=${zimbra_zmjava_java_ext_dirs}:${EXT_JAR_PATH}
 fi
 
-exec ${zimbra_java_home}/bin/java ${java_options} \
+if [ -x ${zimbra_java_home}/bin/java ]; then
+    zimbra_java_zmjava_jre=${zimbra_java_home}/bin/java
+else
+    zimbra_java_zmjava_jre=`which java`
+fi
+
+exec ${zimbra_java_zmjava_jre} ${java_options} \
      -client ${zimbra_zmjava_options} \
      -Dzimbra.home=/opt/zimbra \
      -Djava.library.path=${zimbra_zmjava_java_library_path} \
