@@ -1,4 +1,4 @@
-#!/usr/bin/env zmpython
+#!/opt/zimbra/bin/zmpython
 #
 # ***** BEGIN LICENSE BLOCK *****
 # Zimbra Collaboration Suite Server
