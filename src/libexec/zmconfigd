@@ -104,8 +104,10 @@ def watchdog():
 				Log.logMsg(3, "Watchdog: service %s status is OK." % (service,));
 
 def requestListener():
+	Log.logMsg (1, "listener port: "+str(state.State.mState.localconfig["zmconfigd_listen_port"]))
 	if state.State.mState.serverconfig["zimbraIPMode"] == "ipv4":
 		listener_params = ("127.0.0.1",int(state.State.mState.localconfig["zmconfigd_listen_port"]))
+		Log.logMsg (1, "(ipv4) creating listener: "+repr(listener_params))
 		try:
 			server = listener.ThreadedStreamServer(listener_params, listener.ThreadedRequestHandler)
 		except socket.error, e:
@@ -116,6 +118,7 @@ def requestListener():
 				Log.logMsg (0, "zmconfigd service already running, exiting")
 	else:
 		listener_params = ("::1",int(state.State.mState.localconfig["zmconfigd_listen_port"]))
+		Log.logMsg (1, "(else) creating listener: "+repr(listener_params))
 		try:
 			server = listener.ThreadedStreamServerIPv6(listener_params, listener.ThreadedRequestHandler)
 		except socket.error, e:
