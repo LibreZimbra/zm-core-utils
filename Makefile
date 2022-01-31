@@ -12,8 +12,6 @@ install:
 
 	$(call install_conf, conf/dhparam.pem.zcs)
 	$(call install_conf, conf/zmlogrotate)
-	$(call install_conf, conf/zmconfigd.cf)
-	$(call install_conf, conf/zmconfigd.log4j.properties)
 
 	cp src/bin/*                             $(INSTALL_DIR)/bin
 	cp src/contrib/*                         $(INSTALL_DIR)/contrib
